@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block Body %}
+<h2>Dashboard</h2>
+<hr>
+<p>
+    Welcome, {{request.user.username}} 
+</p>
+<hr>
+<a class="btn btn-outline-danger" href="{% url 'articles:addArticle' %}">Add Article</a>
+<hr>
+{% if articles %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        {% for article in articles  %}
+            <tr>
+                <td scope="row">{{article.id}}</td>
+                <td scope="row"><a href="{% url 'articles:seeArticle' article.id %}">{{article.title}}</a></td>
+                <td scope="row">{{article.author}}</td>
+                <td scope="row">{{article.createdDate}}</td>
+                <td><a href="{% url 'articles:updateArticle' article.id %}" class="btn btn-outline-secondary">Update</a></td>
+                <td><a href="{% url 'articles:deleteArticle' article.id %}" class="btn btn-outline-danger">Delete</a></td>
+
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-danger">You Don't Have Any Article</div>
+{% endif %}
+
+
+
+
+{% endblock Body %} 
